@@ -1,6 +1,10 @@
-# CTranslate-NMT-Web-Interface
-Machine Translation (MT) Web Interface for OpenNMT and FairSeq models using *CTranslate* and *Streamlit*.
+# Moodle Language String Translator
 
+This application aims to provide machine translation specialized for Moodle LMS. It currently supports translation from English to Slovenian.
+
+## CTranslate-NMT-Web-Interface
+
+Machine Translation (MT) Web Interface for OpenNMT and FairSeq models using *CTranslate* and *Streamlit*.
 
 ## Install requirements
 
@@ -10,33 +14,33 @@ It is recommended you first create a virtual environment, and then run:
 pip3 install -r requirements.txt
 ```
 
-## Example 1: Upper My Text
+## Run Moodle Language String Translator
 
-With [test.py](test.py), you can run a very simple Streamlit example using the command:
+With [translate.py](translate.py), you can run a fast web "Moodle Language String Translator" using CTranslate2. For this application to work, you have to change the paths to your models; search the code for [Modify] and adjust the following lines.
 
-```
-streamlit run test.py
-```
+![Moodle Language String Translator](img/moodle_language_string_translator.png)
 
-![streamlit-test](/img/streamlit-test.png)
-
-
-## Example 2: Translate
-
-With [translate.py](translate.py), you can run a fast web translator using CTranslate2. For this example to work, you have to change the paths to your models; search the code for [Modify] and adjust the following lines.
-
-![streamlit-translate](/img/streamlit-translate.png)
-
-Note: This example assumes SentencePiece was used to prepare the data. If you did not use SentencePiece, remove the relevant lines.
-
-
-## Example 3: Translate - Multiple
-
-If you want your web interface to support multiple languages and/or be able to translate multiple lines like this, you can refer to [translate-multi.py](advanced/translate-multi.py)
-
-![streamlit-translate-multi](/img/streamlit-translate-multi.png)
-
+Note: This application assumes SentencePiece was used to prepare the data. If you did not use SentencePiece, remove the relevant lines.
 
 ## Tutorial
 
-Check the detailed instructions at in this [blog tutorial](https://blog.machinetranslation.io/nmt-web-interface/).
+Check the detailed instructions at in this [blog tutorial](https://blog.machinetranslation.io/nmt-web-interface/) by ymoslem.
+
+## Acknowledgements
+
+The development of this application and the neural machine translation models
+used within it were based on tutorials provided by ymoslem.
+Thanks to ymoslem's sharing of these excellent tutorials,
+I was able to create this application.
+I express my utmost gratitude and respect to ymoslem.
+
+OpenNMT-Tutorial
+https://github.com/ymoslem/OpenNMT-Tutorial
+
+CTranslate-NMT-Web-Interface
+https://github.com/ymoslem/CTranslate-NMT-Web-Interface/tree/main
+
+
+
+
+

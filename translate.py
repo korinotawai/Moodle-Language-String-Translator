@@ -1,8 +1,15 @@
+"""
+Moodle Language String Translator
+
+Version: 2024031401
+
+"""
+
 import streamlit as st
 import sentencepiece as spm
 import ctranslate2
 from nltk import sent_tokenize
-
+import pyperclip
 
 def translate(source, translator, sp_source_model, sp_target_model):
     """Use CTranslate model to translate a sentence
@@ -19,17 +26,20 @@ def translate(source, translator, sp_source_model, sp_target_model):
     source_sentences = sent_tokenize(source)
     source_tokenized = sp_source_model.encode(source_sentences, out_type=str)
     translations = translator.translate_batch(source_tokenized)
-    translations = [translation[0]["tokens"] for translation in translations]
+    translations = [translation.hypotheses[0] for translation in translations]
     translations_detokenized = sp_target_model.decode(translations)
     translation = " ".join(translations_detokenized)
+
+    # Remove double quotes from translation
+    translation = translation.replace('"', '')
 
     return translation
 
 
 # [Modify] File paths here to the CTranslate2 SentencePiece models.
-ct_model_path = "/path/to/the/ctranslate/model/directory"
-sp_source_model_path = "/path/to/the/sentencepiece/source/model/file"
-sp_target_model_path = "/path/to/the/sentencepiece/target/model/file"
+ct_model_path = "models/enslo_ctranslate2/"
+sp_source_model_path = "models/source.model"
+sp_target_model_path = "models/target.model"
 
 # Create objects of CTranslate2 Translator and SentencePieceProcessor to load the models
 translator = ctranslate2.Translator(ct_model_path, "cpu")    # or "cuda" for GPU
@@ -38,25 +48,28 @@ sp_target_model = spm.SentencePieceProcessor(sp_target_model_path)
 
 
 # Title for the page and nice icon
-st.set_page_config(page_title="NMT", page_icon="🤖")
+st.set_page_config(page_title="Moodle Language String Translator", page_icon="🇸🇮")
 # Header
-st.title("Translate")
+st.title("Moodle Language String Translator")
+st.write("This application aims to provide machine translation specialized for Moodle LMS. It currently supports translation from English to Slovenian.")
 
 # Form to add your items
 with st.form("my_form"):
     # Textarea to type the source text.
-    user_input = st.text_area("Source Text", max_chars=200)
-    # Translate with CTranslate2 model
-    translation = translate(user_input, translator, sp_source_model, sp_target_model)
+    user_input = st.text_area("English Text", key="textarea")
 
-    # Create a button
-    submitted = st.form_submit_button("Translate")
-    # If the button pressed, print the translation
-    # Here, we use "st.info", but you can try "st.write", "st.code", or "st.success".
-    if submitted:
-        st.write("Translation")
-        st.info(translation)
+    # Translate with CTranslate2 model if form is submitted for the first time
+    if st.form_submit_button("Translate", "Translate from English to Slovenian"):
+        st.session_state.translation = translate(user_input, translator, sp_source_model, sp_target_model)
 
+    # Display Slovenian Translation
+    st.write("Slovenian Translation")
+    st.info(st.session_state.get("translation", ""))
+
+    # Copy to clipboard of Slovenian Translation
+    copytoclipboard = st.form_submit_button("Copy to Clipboard", "Copy from Slovenian translation to clipboard")
+    if copytoclipboard:
+       pyperclip.copy(st.session_state.get("translation", ""))
 
 # Optional Style
 # Source: https://towardsdatascience.com/5-ways-to-customise-your-streamlit-ui-e914e458a17c
