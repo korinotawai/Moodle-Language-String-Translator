@@ -16,7 +16,10 @@ pip3 install -r requirements.txt
 
 ## Run Moodle Language String Translator
 
-With [translate.py](translate.py), you can run a fast web "Moodle Language String Translator" using CTranslate2. For this application to work, you have to change the paths to your models; search the code for [Modify] and adjust the following lines.
+With [translate.py](translate.py), you can run "Moodle Language String Translator" using the command:
+```
+streamlit run translate.py
+```
 
 ![Moodle Language String Translator](img/moodle_language_string_translator.png)
 
@@ -39,8 +42,3 @@ https://github.com/ymoslem/OpenNMT-Tutorial
 
 CTranslate-NMT-Web-Interface
 https://github.com/ymoslem/CTranslate-NMT-Web-Interface/tree/main
-
-
-
-
-
